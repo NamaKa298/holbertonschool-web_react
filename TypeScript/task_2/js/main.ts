@@ -1,19 +1,19 @@
-// Define the DirectorInterface
-export interface DirectorInterface {
+// DirectorInterface
+interface DirectorInterface {
     workFromHome(): string;
     getCoffeeBreak(): string;
     workDirectorTasks(): string;
 }
 
-// Define the TeacherInterface
-export interface TeacherInterface {
+// TeacherInterface
+interface TeacherInterface {
     workFromHome(): string;
     getCoffeeBreak(): string;
     workTeacherTasks(): string;
 }
 
-// Implement the Director class
-export class Director implements DirectorInterface {
+// Director class implementing DirectorInterface
+class Director implements DirectorInterface {
     workFromHome(): string {
         return 'Working from home';
     }
@@ -27,8 +27,8 @@ export class Director implements DirectorInterface {
     }
 }
 
-// Implement the Teacher class
-export class Teacher implements TeacherInterface {
+// Teacher class implementing TeacherInterface
+class Teacher implements TeacherInterface {
     workFromHome(): string {
         return 'Cannot work from home';
     }
@@ -42,8 +42,8 @@ export class Teacher implements TeacherInterface {
     }
 }
 
-// Create the createEmployee function
-export function createEmployee(salary: number | string): Director | Teacher {
+// createEmployee function
+function createEmployee(salary: number | string): Director | Teacher {
     if (typeof salary === 'number' && salary < 500) {
         return new Teacher();
     } else {
@@ -51,7 +51,44 @@ export function createEmployee(salary: number | string): Director | Teacher {
     }
 }
 
-// Test cases
-console.log(createEmployee(200)); // Should return a Teacher instance
-console.log(createEmployee(1000)); // Should return a Director instance
-console.log(createEmployee('$500')); // Should return a Director instance
+function isDirector(employee: Director | Teacher): employee is Director {
+    return employee instanceof Director;
+}
+
+// executeWork function
+function executeWork(employee: Director | Teacher): void {
+    if (isDirector(employee)) {
+        console.log(employee.workDirectorTasks());
+    } else {
+        console.log(employee.workTeacherTasks());
+    }
+}
+
+// String literal type for Subjects
+type Subjects = 'Math' | 'History';
+
+// Function to teach class based on the subject
+function teachClass(todayClass: Subjects): string {
+    if (todayClass === 'Math') {
+        return 'Teaching Math';
+    } else if (todayClass === 'History') {
+        return 'Teaching History';
+    } else {
+        return 'Invalid subject';
+    }
+}
+
+
+const employee1 = createEmployee(200);
+console.log(employee1 instanceof Teacher ? 'Teacher' : 'Director');
+executeWork(employee1);
+
+const employee2 = createEmployee(1000);
+console.log(employee2 instanceof Teacher ? 'Teacher' : 'Director');
+executeWork(employee2);
+
+const employee3 = createEmployee('$500');
+console.log(employee3 instanceof Teacher ? 'Teacher' : 'Director');
+executeWork(employee3);
+console.log(teachClass('Math'));
+console.log(teachClass('History'));
