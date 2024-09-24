@@ -81,14 +81,14 @@ function teachClass(todayClass: Subjects): string {
 
 const employee1 = createEmployee(200);
 console.log(employee1 instanceof Teacher ? 'Teacher' : 'Director');
-executeWork(employee1);
 
 const employee2 = createEmployee(1000);
 console.log(employee2 instanceof Teacher ? 'Teacher' : 'Director');
-executeWork(employee2);
 
 const employee3 = createEmployee('$500');
 console.log(employee3 instanceof Teacher ? 'Teacher' : 'Director');
-executeWork(employee3);
+
+executeWork(createEmployee(200));
+executeWork(createEmployee(1000));
 console.log(teachClass('Math'));
 console.log(teachClass('History'));
